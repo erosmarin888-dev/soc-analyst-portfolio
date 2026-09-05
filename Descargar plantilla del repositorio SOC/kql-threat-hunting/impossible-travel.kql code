@@ -1,0 +1,34 @@
+// =============================================
+// Impossible Travel Detection
+// Author: Eros Marin Morales
+// Description:
+// Detects users authenticating from different
+// countries within a short timeframe.
+// MITRE ATT&CK: T1078 - Valid Accounts
+// =============================================
+
+let TimeWindow = 4h;
+
+SigninLogs
+| where ResultType == 0
+| extend Country = tostring(LocationDetails.countryOrRegion)
+| project TimeGenerated, UserPrincipalName, IPAddress, Country
+| join kind=inner (
+    SigninLogs
+    | where ResultType == 0
+    | extend Country = tostring(LocationDetails.countryOrRegion)
+    | project TimeGenerated, UserPrincipalName, IPAddress, Country
+) on UserPrincipalName
+| where Country != Country1
+| where TimeGenerated1 > TimeGenerated
+| where TimeGenerated1 - TimeGenerated < TimeWindow
+| project
+    UserPrincipalName,
+    FirstLoginTime = TimeGenerated,
+    FirstCountry = Country,
+    FirstIP = IPAddress,
+    SecondLoginTime = TimeGenerated1,
+    SecondCountry = Country1,
+    SecondIP = IPAddress1,
+    TimeDifference = TimeGenerated1 - TimeGenerated
+| order by TimeDifference asc
