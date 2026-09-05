@@ -1,0 +1,70 @@
+# New Admin Account Detection
+
+## Objective
+
+Identify accounts that have been assigned privileged administrative roles in Microsoft Entra ID.
+
+## MITRE ATT&CK
+
+- T1098 - Account Manipulation
+
+## KQL Query
+
+```kusto
+AuditLogs
+| where OperationName contains "Add member to role"
+| extend InitiatedByUser = tostring(InitiatedBy.user.userPrincipalName)
+| extend TargetUser = tostring(TargetResources[0].userPrincipalName)
+| extend RoleAssigned = tostring(TargetResources[0].displayName)
+| project
+    TimeGenerated,
+    InitiatedByUser,
+    TargetUser,
+    RoleAssigned,
+    Result
+| order by TimeGenerated desc
+```
+
+## Data Source
+
+- AuditLogs
+- Microsoft Entra ID
+
+## Threat Scenario
+
+An attacker obtains administrative privileges by assigning privileged roles to a compromised account.
+
+## Analyst Investigation Steps
+
+1. Identify who assigned the role.
+2. Verify whether the assignment was approved.
+3. Review recent activities of the target user.
+4. Check authentication logs for suspicious activity.
+5. Remove unauthorized privileges if necessary.
+
+## Expected Findings
+
+- Unauthorized role assignment
+- Privilege escalation attempt
+- Insider threat activity
+- Compromised administrative account
+
+## Severity
+
+High
+
+## MITRE Mapping
+
+| Tactic | Technique |
+|---------|---------|
+| Persistence | T1098 |
+| Privilege Escalation | T1098 |
+
+## Remediation
+
+- Remove unauthorized administrative access.
+- Reset affected credentials.
+- Review privileged role assignments.
+- Enable MFA for privileged accounts.
+- Monitor future role modifications.
+```
