@@ -1,7 +1,4 @@
 DeviceLogonEvents
-2
 | where ActionType == "LogonFailed"
-3
 | summarize FailedAttempts=count() by AccountName
-4
 | where FailedAttempts > 10
