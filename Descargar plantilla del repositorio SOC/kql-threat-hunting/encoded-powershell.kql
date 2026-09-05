@@ -1,0 +1,29 @@
+// =============================================
+// Detection: Encoded PowerShell Commands
+// Author: Eros Marin Morales
+// Repository: SOC Analyst Portfolio
+//
+// Data Source:
+// Microsoft Defender XDR
+//
+// MITRE ATT&CK:
+// T1059.001 - PowerShell
+//
+// Severity:
+// High
+//
+// Purpose:
+// Detect PowerShell commands executed using
+// Base64 encoded arguments.
+// =============================================
+
+DeviceProcessEvents
+| where FileName =~ "powershell.exe"
+| where ProcessCommandLine contains "-enc"
+    or ProcessCommandLine contains "-EncodedCommand"
+| project
+    Timestamp,
+    DeviceName,
+    InitiatingProcessAccountName,
+    ProcessCommandLine
+| order by Timestamp desc
