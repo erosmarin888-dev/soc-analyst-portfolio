@@ -75,17 +75,3 @@ Medium-High
 - Review endpoint security controls.
 - Monitor recurring LOLBin activity.
 ```
-
-## GitHub Comment
-
-```text
-Threat hunting query designed to identify potential abuse of Living Off the Land Binaries (LOLBins). Adversaries commonly leverage trusted Windows utilities such as CertUtil, MSHTA, Rundll32, and Regsvr32 to execute malicious code, download payloads, and evade security controls.
-```
-
-🔥 Tu conteo ya va quedando serio:
-
-- Incident Response Cases: **10 ✅**
-- Security Detections: **7 ✅**
-- Threat Hunting Queries: **8 ✅**
-
-**Siguiente recomendado:** `dormant-account-logon.md` porque te da cobertura de Identity Threats (Entra ID) y complementa perfecto Password Spray + Impossible Travel + New Admin Accounts. 🚀
