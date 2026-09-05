@@ -1,4 +1,0 @@
-DeviceLogonEvents
-| where ActionType == "LogonFailed"
-| summarize FailedAttempts=count() by AccountName
-| where FailedAttempts > 10
