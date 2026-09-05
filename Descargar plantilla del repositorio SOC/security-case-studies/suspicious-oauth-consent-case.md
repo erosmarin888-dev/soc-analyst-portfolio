@@ -1,0 +1,156 @@
+# Suspicious OAuth Consent Investigation Case Study
+
+> Portfolio Disclaimer: This is a simulated SOC investigation created for educational and portfolio purposes.
+
+## Executive Summary
+
+A Microsoft Entra ID alert identified a user granting high-risk OAuth permissions to a newly registered third-party application.
+
+The activity was investigated to determine whether the application was legitimate or part of an OAuth consent phishing attack designed to obtain unauthorized access to user data.
+
+## Alert Information
+
+| Field | Value |
+|---------|---------|
+| Alert Name | Suspicious OAuth Consent Grant |
+| Severity | High |
+| Status | Investigated |
+| Platform | Microsoft Entra ID |
+| SIEM Platform | Microsoft Sentinel |
+| MITRE ATT&CK | T1528 |
+| Environment | Simulated Lab |
+
+---
+
+## Incident Description
+
+A user granted consent to a new cloud application requesting permissions that exceeded normal business requirements.
+
+Requested permissions included:
+
+- Read Mail
+- Read User Profile
+- Access Files
+- Maintain Access to Data
+
+The request generated a security alert due to the sensitivity of the permissions involved.
+
+---
+
+## Objectives
+
+- Validate the application.
+- Review requested permissions.
+- Identify affected accounts.
+- Determine business justification.
+- Assess compromise risk.
+- Recommend containment actions.
+
+---
+
+## Investigation Process
+
+### Step 1 - Review Consent Event
+
+Reviewed:
+
+- User account
+- Application name
+- Publisher information
+- Consent timestamp
+
+### Step 2 - Analyze Permissions
+
+Reviewed requested permissions and risk level.
+
+Examples:
+
+- Mail.Read
+- Files.Read
+- User.Read
+- offline_access
+
+### Step 3 - Validate Application Legitimacy
+
+Validated:
+
+- Publisher reputation
+- Application age
+- Application registration details
+- Historical usage
+
+### Step 4 - Review User Activity
+
+Investigated:
+
+- Recent sign-ins
+- MFA events
+- Risky sign-ins
+- Related security alerts
+
+### Step 5 - Determine Scope
+
+Searched for:
+
+- Additional users granting consent
+- Similar applications
+- Related suspicious activity
+
+---
+
+## Detection Logic
+
+```kql
+AuditLogs
+| where OperationName contains "Consent"
+| project
+    TimeGenerated,
+    InitiatedBy,
+    TargetResources,
+    Result
+```
+
+---
+
+## Threat Hunting
+
+### OAuth Consent Activity
+
+```kql
+AuditLogs
+| where OperationName contains "Consent"
+```
+
+### Risky Sign-Ins
+
+```kql
+AADUserRiskEvents
+| project
+    UserPrincipalName,
+    RiskLevel,
+    RiskEventType
+```
+
+### Application Activity
+
+```kql
+AuditLogs
+| where TargetResources contains "Application"
+```
+
+---
+
+## Findings
+
+The investigation identified:
+
+- New application registration.
+- High-risk delegated permissions.
+- Unusual consent activity.
+- Lack of business justification.
+
+The activity presented indicators commonly associated with OAuth phishing campaigns.
+
+---
+
+## Root Cause 
