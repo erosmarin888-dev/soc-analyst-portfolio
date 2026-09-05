@@ -1,2 +1,38 @@
+// =============================================
+// Detection: PowerShell Activity Monitoring
+// Author: Eros Marin Morales
+// Data Source: Microsoft Defender XDR
+// MITRE ATT&CK: T1059.001 - PowerShell
+// Severity: Medium
+//
+// Purpose:
+// Detect PowerShell execution on managed
+// endpoints and identify potentially
+// suspicious command activity.
+//
+// Investigation Steps:
+// 1. Review executing user.
+// 2. Review command line arguments.
+// 3. Determine parent process.
+// 4. Check if encoded commands are present.
+// 5. Validate if execution was authorized.
+//
+// Potential False Positives:
+// - IT administration scripts.
+// - Software deployment tools.
+// - Endpoint management automation.
+//
+// Recommended Response:
+// - Review command content.
+// - Validate business justification.
+// - Investigate unusual execution patterns.
+// =============================================
+
 DeviceProcessEvents
 | where FileName =~ "powershell.exe"
+| project
+    Timestamp,
+    DeviceName,
+    InitiatingProcessAccountName,
+    ProcessCommandLine
+| order by Timestamp desc
