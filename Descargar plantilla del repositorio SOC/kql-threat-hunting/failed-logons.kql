@@ -1,4 +1,33 @@
+// =============================================
+// Detection: Excessive Failed Logons
+// Author: Eros Marin Morales
+// Data Source: Microsoft Defender XDR
+// MITRE ATT&CK: T1110 - Brute Force
+// Severity: Medium
+//
+// Purpose:
+// Detect accounts generating a high number of
+// failed authentication attempts.
+//
+// Investigation Steps:
+// 1. Identify affected account.
+// 2. Review source device.
+// 3. Check source IP reputation.
+// 4. Determine if password spray or brute force.
+//
+// Potential False Positives:
+// - Users entering incorrect passwords.
+// - Expired credentials.
+// - Recently changed passwords.
+//
+// Recommended Response:
+// - Contact user.
+// - Validate login activity.
+// - Reset password if necessary.
+// =============================================
+
 DeviceLogonEvents
 | where ActionType == "LogonFailed"
 | summarize FailedAttempts=count() by AccountName
 | where FailedAttempts > 10
+
