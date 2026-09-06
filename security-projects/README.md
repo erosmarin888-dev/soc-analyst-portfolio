@@ -1,13 +1,4 @@
 # SOC Analyst Portfolio
-
-https://img.shields.io/badge/SOC-Analyst-blue
-https://img.shields.io/badge/Microsoft-Sentinel-0078D4
-https://img.shields.io/badge/Microsoft-Defender_XDR-5C2D91
-https://img.shields.io/badge/KQL-Threat_Hunting-orange
-https://img.shields.io/badge/MITRE-ATT%26CK-red
-https://img.shields.io/badge/SC--200-Certified-green
-https://img.shields.io/badge/SC--900-Certified-brightgreen
-
 ---
 
 # Welcome
