@@ -180,11 +180,8 @@ Projects are designed around realistic security investigations, threat hunting a
 
 ### LinkedIn
 
-Add your LinkedIn profile link here.
+https://www.linkedin.com/in/eros-marin-0b7ba52b3/
 
-### GitHub
-
-Add your GitHub profile link here.
 
 ---
 
